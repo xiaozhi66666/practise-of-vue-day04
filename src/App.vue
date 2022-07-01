@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <p>请选择你要购买的书籍</p>
+    <ul></ul>
+    <table border="1" width="500" cellspacing="0">
+      <tr>
+        <th>序号</th>
+        <th>书名</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>合计</th>
+      </tr>
+    </table>
+    <p>总价格为:</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      arr: [
+        {
+          name: "水浒传",
+          price: 107,
+          count: 0,
+        },
+        {
+          name: "西游记",
+          price: 192,
+          count: 0,
+        },
+        {
+          name: "三国演义",
+          price: 219,
+          count: 0,
+        },
+        {
+          name: "红楼梦",
+          price: 178,
+          count: 0,
+        },
+      ],
+    };
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
