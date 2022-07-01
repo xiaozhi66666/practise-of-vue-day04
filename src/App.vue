@@ -1,7 +1,11 @@
 <template>
   <div>
     <p>请选择你要购买的书籍</p>
-    <ul></ul>
+    <ul>
+      <li v-for="(item, index) in arr" :key="index">
+        <button @click="addFn(index)">{{ item.name }}</button>
+      </li>
+    </ul>
     <table border="1" width="500" cellspacing="0">
       <tr>
         <th>序号</th>
@@ -10,8 +14,15 @@
         <th>数量</th>
         <th>合计</th>
       </tr>
+      <tr v-for="(item, index) in arr" :key="index">
+        <td>{{ index + 1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.count }}</td>
+        <td>{{ item.count * item.price }}</td>
+      </tr>
     </table>
-    <p>总价格为:</p>
+    <p>总价格为:{{ totalPrice }}</p>
   </div>
 </template>
 
@@ -42,6 +53,20 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    addFn(ind) {
+      this.arr[ind].count++;
+    },
+  },
+  // 定义计算属性
+  computed: {
+    totalPrice() {
+      return this.arr.reduce(
+        (sum, item) => (sum += item.count * item.price),
+        0
+      );
+    },
   },
 };
 </script>
