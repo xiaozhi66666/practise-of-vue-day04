@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 3. this 指向
+        function fn() {
+            console.log(this); //   ==>  window
+        }
+        const obj = {
+            name: "test",
+            a() {
+                console.log(this.a); //    ===>  /* a() {console.log(this.a);setTimeout(function() {  console.log(this.a); }, 1000);  } */
+                setTimeout(function() {
+                    console.log(this.a); //  ===>  undefined
+                }, 1000);
+            },
+            b() {
+                console.log(this); // ===>  obj
+                fn();
+            },
+            fn1() {
+                console.log(this);
+                fn()
+            }
+        };
+        // obj.a();
+        // obj.b();
+
+        obj.fn1()   //===> 在这里并不指向函数的调用者，定义在全局的函数其中的this指向window
+            //    ===>
+    </script>
+
+</body>
+
+</html>

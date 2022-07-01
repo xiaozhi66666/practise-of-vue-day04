@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1.请补全JavaScript代码，要求实现对象参数的深拷贝并返回拷贝之后的新对象 -->
+    <script type="text/javascript">
+        // const _completeDeepClone = (target, map = new Map()) => {
+        //     // 补全代码
+        //     return _completeDeepClone[map] = target
+
+        // }
+        function deepClone(source) {
+            // null数据需要特殊处理
+            if (source === null) {
+                return source
+            }
+            // 校验要拷贝的数据是对象还是数组
+            const target = Array.isArray(source) ? [] : {}
+            for (const k in source) {
+                const val = source[k]
+                const valueType = typeof val
+                    // 校验拷贝的数据类型
+                if (valueType === 'function') {
+                    target[k] = new Function(`return ${val.toString()}`)()
+                } else if (valueType === 'object') {
+                    target[k] = deepClone(val)
+                } else {
+                    target[k] = val
+                }
+            }
+            return target
+        }
+
+        const obj1 = {
+            name: 'dog',
+            info: {
+                age: 3
+            },
+            fn: function() {}
+        }
+        const obj2 = deepClone(obj1)
+        obj2.name = 'cat'
+        obj2.info.age = 4
+        console.log(obj1) // { name: 'dog', info: { age: 3 }, fn: function(){} }
+        console.log(obj2) // { name: 'cat', info: { age: 4 }, fn: function(){} }
+    </script>
+</body>
+
+</html>
