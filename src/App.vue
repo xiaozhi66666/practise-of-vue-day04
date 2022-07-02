@@ -15,15 +15,15 @@
         <td>{{ item.name }}</td>
         <td>{{ item.price }}</td>
         <td>
-          <button @click="item.count--">-</button
-          ><input type="text" v-model="item.count" /><button
+          <button @click="item.count--" :disabled="item.count == 0">-</button
+          ><input type="number" v-model.number="item.count" /><button
             @click="item.count++"
           >
             +
           </button>
         </td>
         <td>{{ item.count * item.price }}</td>
-        <td><button>删除</button></td>
+        <td><button @click="delFn(item.id)">删除</button></td>
       </tr>
 
       <tr v-if="list.length === 0">
@@ -93,6 +93,10 @@ export default {
       this.list = [];
       this.isAll = false;
     },
+    delFn(id) {
+      const index = this.list.findIndex((item) => item.id == id);
+      this.list.splice(index, 1);
+    },
   },
   computed: {
     // 计算属性(全选框状态)
@@ -118,6 +122,16 @@ export default {
     totalPrice() {
       const arr = this.list.filter((item) => item.c === true);
       return arr.reduce((sum, item) => (sum += item.count * item.price), 0);
+    },
+  },
+  watch: {
+    list: {
+      handler(newVal) {
+        newVal.forEach((item) => {
+          if (item.count < 0) return (item.count = 0);
+        });
+      },
+      deep: true,
     },
   },
 };
